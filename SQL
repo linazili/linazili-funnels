@@ -1,0 +1,58 @@
+-- Eliminate duplicates
+WITH dub AS 
+(
+      SELECT 
+            user_pseudo_id, event_name, 
+            MIN(event_timestamp) event_timestamp       
+      FROM `turing_data_analytics.raw_events` raw
+      GROUP BY 1,2
+)
+SELECT raw.*
+FROM `turing_data_analytics.raw_events` raw 
+JOIN dub ON (raw.user_pseudo_id=dub.user_pseudo_id AND raw.event_name=dub.event_name AND raw.event_timestamp=dub.event_timestamp)
+ORDER BY user_pseudo_id
+
+--Aggregate events per top 3 countries
+WITH t1 AS 
+(
+    WITH dub AS 
+    (
+          SELECT 
+                user_pseudo_id, event_name, 
+                MIN(event_timestamp) event_timestamp       
+          FROM `turing_data_analytics.raw_events` raw
+          GROUP BY 1,2
+    )
+    SELECT raw.*
+    FROM `turing_data_analytics.raw_events` raw 
+    JOIN dub ON (raw.user_pseudo_id=dub.user_pseudo_id AND raw.event_name=dub.event_name AND raw.event_timestamp=dub.event_timestamp)
+    ORDER BY user_pseudo_id)
+SELECT country, COUNT(country) events_number
+FROM t1
+GROUP BY 1
+ORDER BY 2 DESC
+
+--Create a sales funnel chart with a country split in top 3 countries
+WITH t1 AS 
+(
+    WITH dub AS 
+    (
+          SELECT 
+                user_pseudo_id, event_name, 
+                MIN(event_timestamp) event_timestamp       
+          FROM `turing_data_analytics.raw_events` raw
+          GROUP BY 1,2
+    )
+    SELECT raw.*
+    FROM `turing_data_analytics.raw_events` raw 
+    JOIN dub ON (raw.user_pseudo_id=dub.user_pseudo_id AND raw.event_name=dub.event_name AND raw.event_timestamp=dub.event_timestamp)
+    ORDER BY user_pseudo_id)
+
+SELECT event_name,
+      SUM(CASE WHEN country LIKE "United States"  THEN 1 ELSE 0 END) AS us_events,
+      SUM(CASE WHEN country LIKE "India"  THEN 1 ELSE 0 END) AS india_events,
+      SUM(CASE WHEN country LIKE "Canada"  THEN 1 ELSE 0 END) AS canada_events
+FROM t1
+WHERE event_name IN ('user_engagement', 'view_promotion', 'view_item', 'add_to_cart', 'add_payment_info', 'purchase')
+GROUP BY 1
+ORDER BY 2 DESC
