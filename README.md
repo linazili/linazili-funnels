@@ -8,7 +8,7 @@ Funnel Analysis
       GROUP BY 1,2* <br>
       
 **2. Aggregated identified events per top 3 countries.**<br>
-    WITH dub AS <br>
+    *WITH dub AS <br>
     (<br>
      SELECT <br>
      user_pseudo_id, event_name, <br>
@@ -22,6 +22,12 @@ SELECT event_name,<br>
 FROM dub<br>
 WHERE event_name IN ('user_engagement', 'view_promotion', 'view_item', 'add_to_cart', 'add_payment_info', 'purchase')<br>
 GROUP BY 1 <br> 
-ORDER BY 2 DESC<br>
+ORDER BY 2 DESC* <br>
+
+![funnel1](https://user-images.githubusercontent.com/117217908/226907175-c1b29de2-da2b-4cbb-b922-5daa2ccbcecd.JPG)
 
 **3. Created a sales funnel chart with a country split in top 3 countries.**
+![funnel2](https://user-images.githubusercontent.com/117217908/226907223-dab3ac63-5e51-4eb0-96cb-6ff7feaf55f6.JPG)
+
+**4. Created a sales funnel percentage drop chart.**
+![funnel3](https://user-images.githubusercontent.com/117217908/226907356-57b2dcdf-60ec-46ee-b16a-0bcbbb1238b8.JPG)
