@@ -2,10 +2,10 @@
 Funnel Analysis
 
 **1. First, I removed the duplicates to have 1 unique event per user_pseudo_id.**<br>
-     SELECT <br>
+     *SELECT <br>
             user_pseudo_id, event_name, <br> 
             MIN(event_timestamp) event_timestamp    <br>   FROM `turing_data_analytics.raw_events` raw <br>
-      GROUP BY 1,2 <br>
+      GROUP BY 1,2* <br>
       
 **2. Aggregated identified events per top 3 countries.**<br>
     WITH dub AS <br>
