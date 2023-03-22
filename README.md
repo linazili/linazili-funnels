@@ -7,7 +7,7 @@ Funnel Analysis
             MIN(event_timestamp) event_timestamp    <br>   FROM `turing_data_analytics.raw_events` raw <br>
       GROUP BY 1,2 <br>
       
-**2. Aggregated identified events per top 3 countries. **<br>
+**2. Aggregated identified events per top 3 countries.**<br>
     WITH dub AS <br>
     (<br>
      SELECT <br>
