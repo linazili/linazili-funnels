@@ -1,13 +1,13 @@
 # linazili-funnels
 Funnel Analysis
 
-1. First, I removed the duplicates to have 1 unique event per user_pseudo_id.<br>
+**1. First, I removed the duplicates to have 1 unique event per user_pseudo_id.**<br>
      SELECT <br>
             user_pseudo_id, event_name, <br> 
             MIN(event_timestamp) event_timestamp    <br>   FROM `turing_data_analytics.raw_events` raw <br>
       GROUP BY 1,2 <br>
       
-2. Aggregated identified events per top 3 countries. <br>
+**2. Aggregated identified events per top 3 countries. **<br>
     WITH dub AS <br>
     (<br>
      SELECT <br>
@@ -24,4 +24,4 @@ WHERE event_name IN ('user_engagement', 'view_promotion', 'view_item', 'add_to_c
 GROUP BY 1 <br> 
 ORDER BY 2 DESC<br>
 
-4. Created a sales funnel chart with a country split in top 3 countries.
+**3. Created a sales funnel chart with a country split in top 3 countries.**
